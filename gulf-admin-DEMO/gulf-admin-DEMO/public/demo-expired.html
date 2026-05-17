@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>انتهت نسخة الديمو — نظام الخليج</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Tajawal','Segoe UI',Arial,sans-serif;background:#060f1e;min-height:100vh;display:flex;align-items:center;justify-content:center;direction:rtl;padding:16px}
+.card{background:#0d1c30;border:1px solid rgba(201,168,76,0.2);border-radius:20px;padding:48px 44px;width:100%;max-width:480px;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,0.5)}
+.icon{font-size:64px;margin-bottom:20px}
+h1{font-size:24px;font-weight:700;color:#fff;margin-bottom:10px}
+p{font-size:14px;color:#5a7090;line-height:1.7;margin-bottom:6px}
+.divider{border:none;border-top:1px solid #1e2d42;margin:28px 0}
+.features{text-align:right;margin-bottom:28px}
+.features h3{font-size:13px;font-weight:700;color:#c9a84c;margin-bottom:12px}
+.feat-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #0f1e30;font-size:13px;color:#7a8fa8}
+.feat-item i{color:#c9a84c;font-size:16px;flex-shrink:0}
+.feat-item .locked{color:#3a4f66}
+.feat-item .locked i{color:#3a4f66}
+.btn-buy{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:linear-gradient(135deg,#c9a84c,#a8823a);color:#fff;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;text-decoration:none;margin-bottom:12px}
+.btn-contact{display:inline-flex;align-items:center;gap:8px;padding:12px 24px;background:rgba(37,211,102,0.1);color:#25d366;border:1px solid rgba(37,211,102,0.3);border-radius:10px;font-size:14px;font-family:inherit;cursor:pointer;text-decoration:none}
+.stats-row{display:flex;gap:10px;justify-content:center;margin-bottom:28px}
+.stat-box{background:#060f1e;border:1px solid #1e2d42;border-radius:12px;padding:14px 20px;flex:1}
+.stat-box .val{font-size:24px;font-weight:700;color:#c9a84c}
+.stat-box .lbl{font-size:11px;color:#5a7090;margin-top:2px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">⏰</div>
+  <h1>انتهت مدة التجربة المجانية</h1>
+  <p>لقد استخدمت نسخة الديمو لمدة 7 أيام كاملة.</p>
+  <p>للاستمرار في استخدام جميع مميزات النظام، تواصل معنا للحصول على النسخة الكاملة.</p>
+
+  <hr class="divider">
+
+  <div class="stats-row">
+    <div class="stat-box"><div class="val" id="stat-txn">—</div><div class="lbl">معاملة أجريتها</div></div>
+    <div class="stat-box"><div class="val" id="stat-clients">—</div><div class="lbl">عميل سجّلته</div></div>
+    <div class="stat-box"><div class="val">7</div><div class="lbl">أيام تجربة</div></div>
+  </div>
+
+  <div class="features">
+    <h3>✅ ما تحصل عليه في النسخة الكاملة</h3>
+    <div class="feat-item"><i class="ti ti-infinity"></i> معاملات وعملاء غير محدودة</div>
+    <div class="feat-item"><i class="ti ti-network"></i> شبكة LAN — جميع الأجهزة متزامنة</div>
+    <div class="feat-item"><i class="ti ti-file-invoice"></i> فاتورة PDF رسمية احترافية</div>
+    <div class="feat-item"><i class="ti ti-brand-whatsapp"></i> رسائل واتساب تلقائية</div>
+    <div class="feat-item"><i class="ti ti-chart-bar"></i> مخططات بيانية وتقارير مالية</div>
+    <div class="feat-item"><i class="ti ti-bell"></i> تنبيهات انتهاء الإقامة</div>
+    <div class="feat-item"><i class="ti ti-lock"></i> نظام مستخدمين وصلاحيات</div>
+    <div class="feat-item"><i class="ti ti-headset"></i> دعم فني مباشر</div>
+  </div>
+
+  <a class="btn-buy" href="https://wa.me/971500000000?text=أريد شراء نظام الخليج الإداري" target="_blank">
+    <i class="ti ti-shopping-cart"></i> اشترِ النسخة الكاملة
+  </a>
+  <br>
+  <a class="btn-contact" href="https://wa.me/971500000000?text=لدي استفسار عن نظام الخليج" target="_blank">
+    <i class="ti ti-brand-whatsapp"></i> تواصل معنا
+  </a>
+</div>
+
+<script>
+fetch('/api/demo/status').then(r=>r.json()).then(d=>{
+  document.getElementById('stat-txn').textContent     = d.txnCount || '—';
+  document.getElementById('stat-clients').textContent = d.clientCount || '—';
+}).catch(()=>{});
+</script>
+</body>
+</html>

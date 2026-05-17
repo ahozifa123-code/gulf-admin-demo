@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تسجيل الدخول — نظام الخليج</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.10.0/dist/tabler-icons.min.css">
+<style>
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  font-family:'Tajawal','Segoe UI',Arial,sans-serif;
+  background:#060f1e;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  direction:rtl;
+}
+.bg-circles {
+  position:fixed;inset:0;pointer-events:none;overflow:hidden;
+}
+.bg-circles span {
+  position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,0.1);
+}
+.card {
+  background:#0d1c30;
+  border:1px solid rgba(201,168,76,0.2);
+  border-radius:20px;
+  padding:40px 44px;
+  width:100%;
+  max-width:420px;
+  box-shadow:0 24px 80px rgba(0,0,0,0.5);
+  position:relative;
+  z-index:1;
+}
+.logo {
+  text-align:center;
+  margin-bottom:28px;
+}
+.logo-icon {
+  width:68px;height:68px;
+  background:rgba(201,168,76,0.12);
+  border:1px solid rgba(201,168,76,0.3);
+  border-radius:16px;
+  display:inline-flex;
+  align-items:center;justify-content:center;
+  font-size:32px;
+  margin-bottom:14px;
+}
+.logo h1 {
+  font-size:18px;font-weight:700;color:#fff;
+  margin-bottom:4px;
+}
+.logo p { font-size:12px;color:#5a7090; }
+.form-group {
+  margin-bottom:16px;
+}
+.form-group label {
+  display:block;font-size:12px;color:#7a8fa8;
+  font-weight:600;margin-bottom:6px;
+}
+.input-wrap {
+  position:relative;
+}
+.input-wrap i {
+  position:absolute;top:50%;right:14px;
+  transform:translateY(-50%);
+  color:#4a6080;font-size:16px;
+  pointer-events:none;
+}
+.input-wrap input {
+  width:100%;
+  background:#060f1e;
+  border:1px solid #1e3050;
+  border-radius:10px;
+  padding:12px 42px 12px 14px;
+  color:#fff;
+  font-size:14px;
+  font-family:inherit;
+  transition:border .2s;
+  outline:none;
+}
+.input-wrap input:focus {
+  border-color:rgba(201,168,76,0.5);
+  box-shadow:0 0 0 3px rgba(201,168,76,0.08);
+}
+.toggle-pw {
+  position:absolute;top:50%;left:14px;
+  transform:translateY(-50%);
+  background:none;border:none;
+  color:#4a6080;cursor:pointer;font-size:16px;
+  padding:0;
+}
+.btn-login {
+  width:100%;
+  padding:14px;
+  background:linear-gradient(135deg,#c9a84c,#a8823a);
+  color:#fff;
+  border:none;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:700;
+  font-family:inherit;
+  cursor:pointer;
+  margin-top:8px;
+  transition:opacity .2s,transform .1s;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+}
+.btn-login:hover { opacity:.9; }
+.btn-login:active { transform:scale(.98); }
+.btn-login:disabled { opacity:.5;cursor:not-allowed; }
+.error-msg {
+  background:rgba(220,50,50,0.1);
+  border:1px solid rgba(220,50,50,0.3);
+  border-radius:8px;
+  padding:10px 14px;
+  font-size:13px;
+  color:#ff6b6b;
+  margin-bottom:16px;
+  display:none;
+  align-items:center;gap:8px;
+}
+.error-msg.show { display:flex; }
+.first-login-notice {
+  background:rgba(201,168,76,0.08);
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:10px;
+  padding:12px 14px;
+  font-size:12px;
+  color:#c9a84c;
+  margin-bottom:18px;
+  line-height:1.6;
+  display:none;
+}
+.divider {
+  border:none;border-top:1px solid #1e2d42;margin:24px 0;
+}
+.footer-note {
+  text-align:center;font-size:11px;color:#3a4f66;
+}
+/* Change password modal */
+.overlay {
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  display:none;align-items:center;justify-content:center;z-index:99;
+  padding:16px;
+}
+.overlay.show { display:flex; }
+.pw-modal {
+  background:#0d1c30;
+  border:1px solid rgba(201,168,76,0.25);
+  border-radius:16px;padding:32px;
+  width:100%;max-width:380px;
+}
+.pw-modal h2 {
+  font-size:16px;font-weight:700;color:#fff;margin-bottom:6px;
+}
+.pw-modal p { font-size:12px;color:#7a8fa8;margin-bottom:20px; }
+.pw-modal .btn-login { margin-top:16px; }
+</style>
+</head>
+<body>
+
+<div class="bg-circles">
+  <span style="width:500px;height:500px;top:-150px;right:-150px"></span>
+  <span style="width:300px;height:300px;bottom:-100px;left:-80px;border-color:rgba(201,168,76,0.06)"></span>
+</div>
+
+<div class="card">
+  <div class="logo">
+    <div class="logo-icon">🏛</div>
+    <h1>نظام الخليج للخدمات الإدارية</h1>
+    <p>Gulf Admin System — LAN Edition</p>
+  </div>
+
+  <div class="first-login-notice" id="first-notice">
+    <i class="ti ti-info-circle"></i>
+    <div>
+      <strong>أول تسجيل دخول</strong><br>
+      اسم المستخدم: <strong>admin</strong> &nbsp;|&nbsp; كلمة المرور: <strong>admin</strong><br>
+      سيُطلب منك تغييرها فور الدخول.
+    </div>
+  </div>
+
+  <div class="error-msg" id="err-msg">
+    <i class="ti ti-alert-circle"></i>
+    <span id="err-text">اسم المستخدم أو كلمة المرور غير صحيحة</span>
+  </div>
+
+  <div class="form-group">
+    <label>اسم المستخدم</label>
+    <div class="input-wrap">
+      <i class="ti ti-user"></i>
+      <input type="text" id="username" placeholder="admin" autocomplete="username" autofocus>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>كلمة المرور</label>
+    <div class="input-wrap">
+      <i class="ti ti-lock"></i>
+      <input type="password" id="password" placeholder="••••••••" autocomplete="current-password">
+      <button class="toggle-pw" type="button" onclick="togglePw()" id="pw-eye" title="إظهار/إخفاء">
+        <i class="ti ti-eye" id="eye-icon"></i>
+      </button>
+    </div>
+  </div>
+
+  <button class="btn-login" id="btn-login" onclick="doLogin()">
+    <i class="ti ti-login"></i> تسجيل الدخول
+  </button>
+
+  <hr class="divider">
+  <div class="footer-note">
+    🔒 نظام محمي — الشبكة الداخلية فقط<br>
+    <span style="color:#1e3050;margin-top:4px;display:block">Gulf Admin System v2.0</span>
+  </div>
+</div>
+
+<!-- Change Password Modal (shown after first login) -->
+<div class="overlay" id="change-pw-overlay">
+  <div class="pw-modal">
+    <h2>🔐 تغيير كلمة المرور</h2>
+    <p>هذا أول تسجيل دخول. يرجى تغيير كلمة المرور الافتراضية لحماية النظام.</p>
+
+    <div class="error-msg" id="cpw-err" style="margin-bottom:12px"></div>
+
+    <div class="form-group">
+      <label>كلمة المرور الحالية</label>
+      <div class="input-wrap">
+        <i class="ti ti-lock"></i>
+        <input type="password" id="cpw-old" value="admin" style="direction:ltr">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>كلمة المرور الجديدة</label>
+      <div class="input-wrap">
+        <i class="ti ti-lock-plus"></i>
+        <input type="password" id="cpw-new" placeholder="8 أحرف على الأقل" style="direction:ltr">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>تأكيد كلمة المرور</label>
+      <div class="input-wrap">
+        <i class="ti ti-lock-check"></i>
+        <input type="password" id="cpw-confirm" placeholder="أعد الكتابة" style="direction:ltr">
+      </div>
+    </div>
+
+    <button class="btn-login" onclick="doChangePw()">
+      <i class="ti ti-check"></i> حفظ وإكمال الدخول
+    </button>
+  </div>
+</div>
+
+<script>
+let _token = null;
+
+// Show first-login hint if no users set yet
+async function checkFirstLogin() {
+  try {
+    const r = await fetch('/api/auth/check');
+    if (r.status === 401) {
+      // Check if first time
+      document.getElementById('first-notice').style.display = 'block';
+    }
+  } catch(e) {}
+}
+checkFirstLogin();
+
+function togglePw() {
+  const inp = document.getElementById('password');
+  const icon = document.getElementById('eye-icon');
+  if (inp.type === 'password') {
+    inp.type = 'text';
+    icon.className = 'ti ti-eye-off';
+  } else {
+    inp.type = 'password';
+    icon.className = 'ti ti-eye';
+  }
+}
+
+document.getElementById('password').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doLogin();
+});
+document.getElementById('username').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('password').focus();
+});
+
+async function doLogin() {
+  const btn = document.getElementById('btn-login');
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value;
+  const errEl = document.getElementById('err-msg');
+  const errTxt = document.getElementById('err-text');
+
+  if (!username || !password) {
+    errTxt.textContent = 'يرجى إدخال اسم المستخدم وكلمة المرور';
+    errEl.classList.add('show'); return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="ti ti-loader-2" style="animation:spin 1s linear infinite"></i> جاري التحقق...';
+  errEl.classList.remove('show');
+
+  try {
+    const r = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+    const data = await r.json();
+
+    if (!r.ok) {
+      errTxt.textContent = 'اسم المستخدم أو كلمة المرور غير صحيحة';
+      errEl.classList.add('show');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-login"></i> تسجيل الدخول';
+      return;
+    }
+
+    _token = data.token;
+    sessionStorage.setItem('gulf_token', _token);
+    sessionStorage.setItem('gulf_user', username);
+    sessionStorage.setItem('gulf_role', data.role);
+
+    if (data.firstLogin) {
+      // Show change password modal
+      document.getElementById('change-pw-overlay').classList.add('show');
+      btn.disabled = false;
+      btn.innerHTML = '<i class="ti ti-login"></i> تسجيل الدخول';
+    } else {
+      window.location.href = '/';
+    }
+  } catch(e) {
+    errTxt.textContent = 'تعذّر الاتصال بالسيرفر';
+    errEl.classList.add('show');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="ti ti-login"></i> تسجيل الدخول';
+  }
+}
+
+async function doChangePw() {
+  const old = document.getElementById('cpw-old').value;
+  const nw  = document.getElementById('cpw-new').value;
+  const cf  = document.getElementById('cpw-confirm').value;
+  const errEl = document.getElementById('cpw-err');
+
+  errEl.classList.remove('show');
+
+  if (nw.length < 6) {
+    errEl.textContent = 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+    errEl.classList.add('show'); return;
+  }
+  if (nw !== cf) {
+    errEl.textContent = 'كلمتا المرور غير متطابقتين';
+    errEl.classList.add('show'); return;
+  }
+
+  try {
+    const r = await fetch('/api/auth/change-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'x-auth-token': _token },
+      body: JSON.stringify({ oldPassword: old, newPassword: nw })
+    });
+    const data = await r.json();
+    if (!r.ok) {
+      errEl.textContent = 'كلمة المرور الحالية غير صحيحة';
+      errEl.classList.add('show'); return;
+    }
+    window.location.href = '/';
+  } catch(e) {
+    errEl.textContent = 'حدث خطأ، حاول مجدداً';
+    errEl.classList.add('show');
+  }
+}
+
+// Spinner CSS
+const style = document.createElement('style');
+style.textContent = '@keyframes spin { to { transform:rotate(360deg); } }';
+document.head.appendChild(style);
+</script>
+</body>
+</html>
