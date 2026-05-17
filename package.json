@@ -1,0 +1,15 @@
+{
+  "name": "gulf-admin-lan",
+  "version": "2.0.0",
+  "description": "نظام الخليج للخدمات الإدارية - نظام شبكة داخلية LAN",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^9.4.3",
+    "express": "^4.22.2",
+    "sql.js": "^1.14.1"
+  }
+}
